@@ -1,12 +1,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+	<modelVersion>4.0.0</modelVersion>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
   
-  <groupId>cl.emagina.curso.fakewarehouse</groupId>
-  <artifactId>EjemploJava</artifactId>
-  <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
-  <name>fake-warehouse</name>
+	<groupId>cl.emagina.curso.fakewarehouse</groupId>
+	<artifactId>EjemploJava</artifactId>
+	<packaging>jar</packaging>
+	<version>1.0-SNAPSHOT</version>
+	<name>fake-warehouse</name>
 
   <dependencies>
 
@@ -57,6 +61,7 @@
 				</execution>
 			</executions>
 		</plugin>
+		<!-- Eliminamos esto y vemos que pasa... con el build
 		<plugin>
 			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-jar-plugin</artifactId>
@@ -69,7 +74,7 @@
 					</manifest>
 				</archive>
 			</configuration>
-		</plugin>
+		</plugin>-->
 		<plugin>
 			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-surefire-plugin</artifactId>
