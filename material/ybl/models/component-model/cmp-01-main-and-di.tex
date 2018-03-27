@@ -1,0 +1,76 @@
+%-------------------------------------------------------------------------------
+\section{(CMP-01) main}\label{sec:cmp-01}
+%\begin{tabular}{l}
+%  \textcolor{gray}{V\'ease CMP-08, sec.\ref{sec:cmp-08}.}\\
+%\end{tabular}
+
+\paragraph{}
+Se ocupa el command pattern junto a inyecci\'on de dependencias
+para agregar f\'acilmente distintos formatos de informaci\'on de servicios
+a ser cargados en el cat\'alogo.
+
+\paragraph{}
+La figura \ref{fig:cmp01-main} muestra c\'omo se inician los batches:
+
+\begin{itemize}
+    \item \verb|CatalogLoader| es una cascara vac\'ia que solamente provee el \verb|main|
+    \item \verb|CatalogLoaderOptions|
+      \begin{itemize}
+      \item lee y verifica los argumentos pasados por el usuario 
+      \item instanciar los objetos derivados de las opciones seleccionadas
+      \end{itemize}
+    \item \verb|ServiceInfoKind|
+      \begin{itemize}
+      \item es una enumeraci\'on que identifica las clases/categor\'ias
+            de informaci\'on conocidas por la base de datos del cat\'alogo
+              (taxonom\'ia, OSB proxy services, access logs, \ldots)
+      \item permite distinguir las tablas a llenar
+      \item permite determinar la informaci\'on a proporcionar en los archivos 
+            que contienen la informaci\'on a cargar
+      \end{itemize}
+    \item \verb|AppComposer| 
+      \begin{itemize}
+      \item es el punto central para configurar las dependencias en esta la aplicaci\'on
+      \item llena el container que se le presenta especificando las dependencias entre objetos
+      \item en particular, all\'i se define el mapeo entre \verb|ServiceInfoKind|
+            e implementaci\'on concreta de \verb|Runnable|, responsable de realizar la carga
+      \end{itemize}
+    \item \verb|PicoContainer| 
+      \begin{itemize}
+      \item guarda las dependencias entre objetos
+      \item resuelve las dependencias
+      \item instancia objetos con sus dependencias resueltas
+      \end{itemize}
+    \item \verb|ComponentAdapter| 
+      \begin{itemize}
+      \item es una clase an\'onima definida a la medida en el composer 
+      \item maneja un tipo espec\'ifico de dependencias:
+            los mapeos entre \verb|ServiceInfoKind| y \verb|Runnable|
+      \item dado un \verb|ServiceInfoKind| indica cu\'al es el \verb|Runnable| asociado
+      \end{itemize}
+    \item \verb|Runnable| 
+      \begin{itemize}
+      \item es la interfaz que debe implementar cada comando de carga del cat\'alogo
+      \item la clase concreta se encarga de cargar la informaci\'on de servicios
+      \end{itemize}
+    \item \verb|main| coordina las acciones para llevar a cabo al cargar del cat\'alogo:
+      \begin{itemize}
+      \item instancia el container que recibir\'a las definiciones de las dependencias 
+            entre objetos
+      \item solicita al composer cargar las dependencias en el container
+      \item inicia el parseo de los argumentos de usuario
+      \item recupera los objetos correspondientes a las opciones seleccionadas
+      \item agrega esos objetos en el container de dependencias
+      \item solicita al container que resuelva el \verb|Runnable| correspondiente 
+            al tipo de informaci\'on (\verb|ServiceInfoKind|) especificado por el usuario
+      \item ejecuta el \verb|Runnable|, carg\'andose los datos a la BD
+      \end{itemize}
+\end{itemize}
+
+
+\begin{figure}[hbt]
+  \centering
+  \includegraphics[width=.8\textwidth]{cmp-01-main-vopc.png}
+  \caption{(CMP-01) Main, opciones, carga de dependencias.}
+  \label{fig:cmp01-main}
+\end{figure}

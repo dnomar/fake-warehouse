@@ -1,0 +1,30 @@
+% NOTA perfstats vs catalogo
+% casos de uso [01,20[, [70,80[  : perfstats
+%              [20,30[  [60,70[  : catalogo
+
+% Automatic label names for figure, lists, etc.
+\renewcommand{\contentsname}{\'Indice del contenido}
+\renewcommand{\listfigurename}{Lista de figuras}
+\renewcommand{\listtablename}{Lista de tablas}
+%\renewcommand{\refname}{Referencias}
+\renewcommand{\figurename}{Figura}
+
+% Project name, version, pendings, ...
+\newcommand{\prjName}{Fake DataWareHouse- Cat\'alogo}
+\newcommand{\prjVersion}{v1.0-alpha}
+\newcommand{\PENDIENTE}[1]{\tikz[baseline=(X.base)] \node [rounded corners, fill=blue!40] (X) {PENDIENTE}; \textcolor{blue}{#1}}
+\newcommand{\DUDA}[1]{}%{\tikz[baseline=(X.base)] \node [rounded corners, fill=orange!40] (X) {DUDA}; \textcolor{red}{#1}}
+\newcommand{\veaseUC}[1]{v\'ease UC-#1, sec. \ref{uc-#1}}
+\newcommand{\ucRef}[1]{UC-#1, sec. \ref{uc-#1}}
+% UC-131
+\newcommand{\ucCXxxiNr}{UC-131}
+\newcommand{\ucCXxxiActor}{Temporizador}
+\newcommand{\ucCXxxiTitle}{Actualizando repertorio de servicios a partir de logs de accesos}
+\newcommand{\ucCXxxiName}{\ucCXxxiActor{} \ucCXxxiTitle}
+\newcommand{\ucCXxxiFullName}{\ucCXxxiNr{} \ucCXxxiName{}}
+% UC-132
+\newcommand{\ucCXxxiiNr}{UC-132}
+\newcommand{\ucCXxxiiActor}{Temporizador}
+\newcommand{\ucCXxxiiTitle}{Actualizando repertorio servicios a partir de proxy services expuestos en OSB}
+\newcommand{\ucCXxxiiName}{\ucCXxxiiActor{} \ucCXxxiiTitle}
+\newcommand{\ucCXxxiiFullName}{\ucCXxxiiNr{} \ucCXxxiiName{}}

@@ -1,0 +1,104 @@
+%. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+% uc-132 Temporizador Recabando lista de proxy svc expuestos en OSB}
+\subsection{\ucCXxxiiFullName{}}\label{uc-132}
+\textcolor{gray}{V\'ease la realizaci\'on del caso de uso, sec. \ref{sec:ucr-132}}
+
+\subsubsection*{Descripci\'on}
+\paragraph{}
+Peri\'odicamente el Temporizador solicita al Cat\'alogo
+que actualice su registro de servicios expuestos por Buses de Servicios (OSB).
+%
+El Cat\'alogo recupera la lista de Buses de Servicios (OSBs) que conoce
+(\veaseUC{136}) y
+solicita a cada Bus la lista de Proxy Services que expone.
+%
+Luego agrega un registro por servicio (URI/Bus) que a\'un no lo tiene,
+marca aquellos que ya no aparecen en un Bus (no son eliminados) y
+finalmente asocia la fecha de \'ultima actualizaci\'on a cada servicio registrado.
+
+
+%     .  .      .  .      .  .      .  .      .  .      .  .      .  .      .  .
+\subsubsection*{Resultado deseado}
+\paragraph{}
+Los Proxy Services expuestos por los OSBs quedan repertoriados en el Cat\'alogo.
+
+
+%     .  .      .  .      .  .      .  .      .  .      .  .      .  .      .  .
+\subsubsection*{Objetivos del usuario}
+\begin{itemize}
+    \item Identificar los servicios expuestos por un OSB (los Proxy services)
+    \item Apoyar la gesti\'on del ciclo de vida de los servicios.
+\end{itemize}
+
+
+%     .  .      .  .      .  .      .  .      .  .      .  .      .  .      .  .
+\subsubsection*{Dependencias}
+\begin{tabular}{lp{.8\textwidth}}
+    Complementa: & \ucCXxxiFullName{} (sec. \ref{uc-131}). \\
+\end{tabular}
+
+
+%     .  .      .  .      .  .      .  .      .  .      .  .      .  .      .  .
+%\subsubsection*{Pre-condiciones}
+
+
+%     .  .      .  .      .  .      .  .      .  .      .  .      .  .      .  .
+\subsubsection*{Escenarios}
+\paragraph{}
+Para evitar confundir servicios con una misma URI\footnote{
+    T\'ecnicamente el Proxy Endpoint URI (ej. \url{/CRM/ProductCatalog/...})
+    que contiene solamente el URL path,
+    sin el esquema, host y puerto (i.e. sin \url{http://OSBMovilProd07})
+    Sino los servicios balanceados aparecer\'ian duplicados.
+}
+es necesario identificar cada servicio por medio del Bus de Servicios que lo expone
+y de su URI. 
+En lo que sigue la palabra ``servicio'' se refiera a ``URI/Bus''.
+
+\begin{itemize}
+    \item
+        Cuando un servicio ya se encuentra registrado en el Cat\'alogo y 
+        el bus que lo expone es el mismo, no se registra cambio.
+    \item 
+        Cuando un servicio expuesto por un bus de servicios no est\'a en el Cat\'alogo,
+        entonces es registrado.
+    \item 
+        Cuando una URI ya se encuentra en el Cat\'alogo pero asociada a otro Bus,
+        se registra una nueva entrada URI/Bus.
+    \item 
+        Cuando una URI registrada en el Cat\'alogo
+        ya no es expuesta por un Bus de Servicios
+        que le est\'a asociado en Cat\'alogo,
+        se marca el servicio URI/Bus como ya no expuesto por el Bus correspondiente.
+    \item 
+        Cuando la no es posible obtener las listas de servicios de alg\'un Bus de Servicios,
+        el Cat\'alogo ofrece una visi\'on parcial. P.ej. servicios pueden haber sido agregados
+        o dados de baja en el Bus cuya informaci\'on no est\'a disponible.\\
+        Para evitar confusiones, el Cat\'alogo registra la fecha y hora
+        del \'ultimo cambio en el registro del servicio.
+        \PENDIENTE{Validar: esa fecha es distinta para cada grupo modificable en el Cat\'alogo}.
+    \item 
+        Cuando un servicio es migrado de un Bus de Servicio,
+        la informaci\'on registrada en los escenarios anteriores permite al menos identificar
+        su baja en un Bus de Servicios y su alta en el otro.\\
+        %
+        Es responsabilidad del Arquitecto colocar otras marcas si desea identificar
+        expl\'icitamente la migraci\'on (p.ej. v\'ia uc-21, sec.\ref{uc-21}).
+    \item 
+        De manera similar a una migraci\'on, 
+        cuando un servicio es renombrado, 
+        la informaci\'on registrada en los escenarios anteriores permite al menos identificar
+        la baja de antigua URI, en un Bus de Servicios que lo expone, 
+        y el alta de su nuevo nombre.\\
+        %
+        Es responsabilidad del Arquitecto colocar otras marcas si desea identificar
+        expl\'icitamente la un cambio de nombre (p.ej. v\'ia uc-21, sec.\ref{uc-21}).
+    \item 
+        Cuando se interrumpe la petici\'on o la informaci\'on llega incompleta,
+        el Cat\'alogo no es modificado.\\
+        \PENDIENTE{`?Dejar alguna marca, notificar algui\'en?}
+\end{itemize}
+
+
+%     .  .      .  .      .  .      .  .      .  .      .  .      .  .      .  .
+%\subsubsection*{Aspectos t\'ecnicos}

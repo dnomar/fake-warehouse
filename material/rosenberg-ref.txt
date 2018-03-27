@@ -1,0 +1,11 @@
+Title	Use Case Driven Object Modeling with UML: A Practical Approach
+Addison-Wesley object technology series
+Object technology
+Author	Doug Rosenberg
+Contributor	Kendall Scott
+Edition	illustrated, annotated
+Publisher	Addison-Wesley, 1999
+Original from	the University of California
+Digitized	18 Dec 2010
+ISBN	0201432897, 9780201432893
+Length	165 pages

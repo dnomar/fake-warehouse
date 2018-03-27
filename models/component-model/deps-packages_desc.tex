@@ -1,0 +1,25 @@
+% File: deps-packages_desc.tex
+\paragraph{}
+La figura \ref{fig:pkg-deps} muestra las dependencias entre packages de la capa web
+(release 1).
+A continuaci\'on se muestra la asignaci\'on de clases a packages para los batches:
+
+\begin{verbatim}
+com/everis/soa/catalog/model/
+    CatalogConsumer
+    ServiceConsumer
+    ServiceInfoKind
+
+com/everis/soa/catalog/app/
+    AppComposer
+    CatalogLoader
+    CatalogLoaderOptions
+
+com/everis/soa/catalog/osb/
+    DefaultOsbProxyServiceDef
+    OsbProxyServiceInfoImporter
+    OsbProxyServiceDef
+    OsbProxyServiceConsumer
+    OsbProxyServicesCsvParser
+\end{verbatim}
+

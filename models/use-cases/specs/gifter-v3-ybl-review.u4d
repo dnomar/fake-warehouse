@@ -1,0 +1,46 @@
+digraph G {
+//  rankdir=LR;
+  edge [arrowhead=vee];
+
+  actor Inversor
+  actor Festejado
+  actor Amigo
+  actor Comercio
+  actor admin      "Administrador_._de regalos"
+
+//  subgraph cluster0 {
+  usecase  uc_arma_wishlist   "Armando wishlist_._de regalos"
+  usecase  uc_obsequiando     "Obsequiando regalo_._descrito en wishlist"
+  usecase  uc_opciones        "Ofreciendo opciones_._de regalo a_._deseo de regalo"
+  usecase  uc_get_comport      "Obteniendo datos_._de comportamiento_._de deseos y regalos"
+  usecase  uce_multi_obsequio  "Obsequiando regalo_._entre varios"
+  usecase  uci_ve_wishlist    "visualisando_._wishlist"
+  usecase  uci_ve_catalogo    "visualisando_._catalogo"
+  usecase  uci_pagando         "Pagando regalo"
+//  }
+
+
+
+  Festejado -> uc_arma_wishlist;
+  uc_arma_wishlist -> uci_ve_catalogo     [label="<<include>>", style=dashed];
+  uc_arma_wishlist -> uci_ve_wishlist     [label="<<include>>", style=dashed];
+
+  Amigo     -> uc_obsequiando    -> Festejado
+  uc_obsequiando   -> uci_ve_catalogo     [label="<<include>>", style=dashed];
+  uc_obsequiando   -> uci_pagando         [label="<<include>>", style=dashed];
+  uc_obsequiando   -> uci_ve_wishlist     [label="<<include>>", style=dashed];
+  uc_obsequiando   -> uce_multi_obsequio  [label="<<extends>>", style=dashed, dir=back];
+  uce_multi_obsequio -> Amigo
+
+  uci_pagando -> Comercio;
+
+  Comercio  -> uc_opciones  -> Festejado
+  uc_opciones      ->  uci_ve_catalogo    [label="<<include>>", style=dashed];
+  uc_opciones      -> uci_ve_wishlist     [label="<<include>>", style=dashed];
+
+
+  admin     -> uc_opciones
+
+  Inversor  -> uc_get_comport
+
+}

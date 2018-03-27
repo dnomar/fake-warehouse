@@ -1,0 +1,38 @@
+%-------------------------------------------------------------------------------
+\section{(CMP-02) batches}\label{sec:cmp-02}
+%\begin{tabular}{l}
+%  \textcolor{gray}{V\'ease CMP-08, sec.\ref{sec:cmp-08}.}\\
+%\end{tabular}
+
+\paragraph{}
+La figura \ref{fig:cmp02-batches} describe los batches para la extracci\'on 
+de listas de servicios desde varias fuentes y para su carga a la base de datos
+del cat\'alogo.
+
+\begin{itemize}
+    \item {\tt extract-and-load.sh}\\
+        Coordina la invocaci\'on de los scripts de extracci\'on y de carga.
+
+    \item {\tt sample-params.sh}\\
+        Contiene las claves y par\'ametros de conecci\'on a los distintos
+        servidores, con el objeto de mantener un punto central de definici\'on
+        de los par\'ametros de ejecuci\'on de los scripts.
+
+    \item {\tt extract-svclist-from-access-logs-in-elasticsearch.sh}\\
+        Realiza la consulta a Elasticsearch para recuperar la lista de servicios
+        invocados y los dominios a los cuales pertenecen.
+ 
+    \item {\tt extract-svclist-from-osb-proxy-services-in-osb-domain.sh}\\
+        Extrae la lista de proxy services y desde un servidor OSB.
+        Es invocado una vez por cada cluster OSB.
+ 
+    \item {\tt load-catalog-from-extracted-files.sh}\\
+        Se encarga de invocar el JAR del CatalogLoader.
+\end{itemize}
+
+\begin{figure}[hbt]
+  \centering
+  \includegraphics[width=\textwidth]{cmp-02-batches-vopc.png}
+  \caption{(CMP-02) Batches y sus dependencias.}
+  \label{fig:cmp02-batches}
+\end{figure}

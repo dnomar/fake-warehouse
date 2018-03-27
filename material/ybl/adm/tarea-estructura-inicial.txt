@@ -1,0 +1,227 @@
+Hola Van,
+
+Finalmente el builder va.
+He separado las clases/interfaces necesarias, introduciendo el parser.
+
+La idea general es que el main realiza el setup cuyos argumentos son
+proporcionados al invocar el programa. Luego es posible tener varias
+interfaces de usurio que saben como capturar los comandos ingresados por el
+usuario: como argumentos del programa, leyendo lineas de comandos, GUI.
+
+El main es el director y el client el product es el IRepositorioPatente.
+El main tambien instancia / usa un parser que sabe leer los argumentos del
+programa y verificadr su sintaxis (no hace validaciones cruzadas, eso lo hace
+el builder en el momento del make; tampoco valida semantica, p.ej. existencia
+del file, eso lo hace el builder).
+
+El ...commandinterpreter es responsable de interpretar los comandos del
+usuario. Captura los comandos del usuario, los ejecuta (delegando al
+repositorio) y presenta los resultados. Hay varios sabores: Main args, CLI y
+GUI.
+
+Espero que se entienda y que te ayude.
+
+Saludos,
+Yves
+
+
+El main debiera verse mas o menos asi:
+
+    public static void main( String[] args ) {
+        MyArgsParser              parser  = new MyArgsParser( args );
+        RepositorioPatenteBuilder builder = new RepositorioPatenteBuilder();
+        
+        TipoRepositorio tipoReop = parser.parseTipoRepositorio();
+        switch ( tipoRepo ) {
+
+            case TipoRepositorio.JSON_FILE:
+                builder.addJsonFileName( parser.parseJsonFileName() );
+                break;
+
+            case TipoRepositorio.BD:
+                builder.addJdbcConnectionString( parser.parseJdbcConnectionString() );
+                builder.addMarcasTable( parser.parseMarcasTableName() );
+                break;
+
+            default:
+                throw new UnsupportedOperationException(
+                    "tipo repositorio aun no implementado: "+tipRepo );
+        }
+
+        IRepositorioPatente irp = builder.makeIRepositorioPatente();
+
+        TipoInterfazUsuario tipoUI = parser.parserTipoUI();
+        switch ( tipoUI ) {
+
+            case TipoInterfazUsuario.MAIN_ARGS:
+                String cmdArgs[] = 
+                (new MyArgsCommandInterpreter( parser.parseArgsCommand()
+                                             , irp
+                                             , System.out
+                ).run();
+                break;
+
+//          case TipoInterfazUsuario.READ_LINE:
+//              (new MyCliCommandInterpreter( System.in
+//                                          , irp
+//                                          , System.out
+//              ).run();
+//              break;
+
+//          case TipoInterfazUsuario.GUI:
+//              (new MyGuiCommandInterpreter( irp ).start();
+//              break;
+
+            default:
+                throw new UnsupportedOperationException(
+                    "tipo repositorio aun no implementado: "+tipRepo );
+        }
+        
+    }
+
+public class MySqlRepoPatente implements IRepositorioPatente {
+
+    public MySqlRepoPatente( Connection c, String marcasTableName ) {
+    }
+
+    //agregar otros metodos
+}
+
+
+/**
+ * PENDIENTE: describir la estructura JSon esperada.
+ */
+public class JsonRepoPatente implements IRepositorioPatente {
+
+    public JsonRepoPatente( File jsonFile ) {
+    }
+
+    //agregar otros metodos
+}
+
+
+/**
+ * responsable de instanciar el repositorio de patentes, 
+ * habiendo previamente verificado la consistencia de los datos
+ * necesarios para poder instanciarlo.
+ *
+ * Tipicamente habra un builder concreto por tipo de repo, pero si el codigo
+ * es poco, se puede implementar completamente en una sola y misma clase
+ * (ev. hacer de esta interfaz una clase).
+ */
+public interface RepositorioPatenteBuilder {
+    void addJdbcConnectionString( String cs );
+    void addMarcasTable( String table_name );
+    void addJsonFileName( String fname );
+
+    /**
+     * Crea la instancia concreta de IRepositorioPatente.
+     * 
+     * @throws IllegalStateException cuando falta informacion (p.ej.
+     * addMarcasTable, sin haber invocado addJsonFileName, o el archivo JSon
+     * no existe o es un directorio, etc. )
+     */
+    IRepositorioPatente makeIRepositorioPatente();
+}
+
+
+/**
+ * Clase responsable de parsear los argumentos de la linea de comandos.
+ * 
+ * Es responsable de leer los argumentos necesarios para resolver las
+ * dependencias necesarias para hacer el setup de la aplicacion.
+ * 
+ * PENDIENTE: describir aqui la estructura de la linea de comandos y su
+ * interpretacion.
+ */
+public class MyArgsParser {
+
+
+    public enum TipoRepositorio { BD, JSON_FILE }
+
+    public enum TipoInterfazUsuario {
+        /** Los comandos a ejecutar son pasados como argumentos del programa */
+        MAIN_ARGS, 
+
+        /** Los comandos a ejecutar son leidos desde el standard input
+         * (linea a linea.
+         */
+        READ_LINE,
+
+        /** Una interfaz grafica. */
+        GUI 
+    }
+
+
+    public MyArgsParser( String[] args ) {
+    }
+
+
+    /**
+     * Retorna el tipo de fuente especificado por los args asociados a esta
+     * clase.
+     * 
+     * @throws IllegalArgumentException PENDIENTE bajo que condiciones
+     */
+    public TipoRepositorio parseTipoRepositorio() {}
+
+
+    /**
+     * Retorna el string de coneccion a la BD.
+     * Nota: el string de conexion puede contener el usuario, la clave, el
+     * host y el port.
+     * 
+     * @throws IllegalArgumentException PENDIENTE bajo que condiciones
+     */
+    public String parseJdbcConnectionString() {}
+
+
+    public String parseMarcasTableName() {}
+
+
+    /**
+     * Retorna el nombre del archivo que contiene los datos en formato JSON.
+     * 
+     * @throws IllegalArgumentException 
+     */
+    public String parseJsonFileName() {}
+
+
+    /** 
+     * Retorna el comando a ejecutar, pasado como argumento del programa.
+     * Solamente contiene el comando y sus parametros (pasados como argumentos
+     * del programa).
+     * 
+     * @throws IllegalArgumentException PENDIENTE bajo que condiciones
+     */ 
+    public String[] parseArgsCommand() {}
+}
+
+
+/**
+ * Clase que sabe interpretar comandos pasados como argumentos del programa.
+ * PENDIENTE: describir la estructura de los comandos y parametros esperados
+ * ...pora hora puede ser un solo comando/parametro.
+ */
+public class MyArgsCommandInterpreter implements Runnable {
+
+    /**
+     * @param args comando(s) a ejecutar y sus parametros
+     * @params repo repositorio que proporciona los datos para ejecutar
+     *          comandos (p.ej. buscaxMarca)
+     * @param out writer donde se escriben los resultados de los comandos
+     *         ejecutados.
+     */
+    public MyArgsCommandInterpreter( String[] args,
+                                     IRepositorioPatente repo,
+                                     PrintWriter out
+                                   ) {
+    }
+
+
+    /**
+     * Ejecuta los comandos asociados a esta clase.
+     */
+    public void run() {
+    }
+}

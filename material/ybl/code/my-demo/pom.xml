@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>cl.ybl.sandbox</groupId>
+  <artifactId>my-demo</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>my-demo</name>
+  <url>http://maven.apache.org</url>
+  <properties>
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+      <test.log4j.config>${project.build.directory}/test-classes/log4j2-test.xml</test.log4j.config>
+  </properties>
+  <dependencyManagement>
+    <dependencies>
+      <!-- Log4J2
+        API: https://logging.apache.org/log4j/2.x/log4j-api/apidocs/index.html
+        Logger, LogManager
+        Config: https://logging.apache.org/log4j/2.x/manual/configuration.html
+        -->
+      <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-bom</artifactId>
+        <version>2.8.1</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- Log4J2 -->
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <!--
+    <testResources>
+      <testResource>
+        <directory>src/test/resources</directory>
+        <includes>
+          <include>log4j2-test.xml</include>
+        </includes>
+      </testResource>
+    </testResources>
+    -->
+    <pluginManagement>
+      <plugins>
+        <!-- Exec plugin -->
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <version>1.6.0</version>
+        </plugin>
+        <!-- Surefire -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.19.1</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <!-- Exec plugin -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>java</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+            <mainClass>cl.ybl.sandbox.App</mainClass>
+            <arguments>
+                <argument>one</argument>
+                <argument>two</argument>
+            </arguments>
+        </configuration>
+      </plugin>
+      <!-- Surefire plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+</project>

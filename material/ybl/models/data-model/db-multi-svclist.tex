@@ -1,0 +1,293 @@
+%-------------------------------------------------------------------------------
+\section{Catalogando m\'ultiples fuentes de info}
+\paragraph{}
+Esta secci\'on presenta la expansi\'on del modelo de datos
+para consolidar distingos aspectos de un mismo servicio desde diversos
+fuentes de informaci\'on
+(uso real desde logs de acceso,
+ gesti\'on del ciclo de vida desde la planilla de taxonomi\'ia,
+ declaraci\'on de proxy service desde de los buses de servicios);
+para discriminar el uso real de los servicios (registrado por los logs de acceso)
+vs su declaraci\'on de existencia (registrados en la taxonom\'ia y en los OSB);
+para distinguir en qu\'e bus de servicio est\'an registrados, si son proxy services;
+para discriminar los grupos de instancias (cluster o dominio) que albergan los servicios.
+
+
+%. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+\subsection{Modelo conceptual}\label{sec:multi-svclist-ER}
+\paragraph{}
+La figura \ref{fig:db-multi-er} presenta los principales conceptos involucrados
+en el manejo de informaci\'on \emph{acerca} de los servicios.
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=.4\textwidth]{db-multi-svclist-conceptual.png}
+    \caption{ER para soportar m\'ultiples fuentes de informaci\'on acerca de distintos aspectos de los servicios.}
+    \label{fig:db-multi-er}
+\end{figure}
+
+
+%     .  .      .  .      .  .      .  .      .  .      .  .      .  .      .  .
+\subsubsection{Individualizando servicios}
+\paragraph{}
+El URL path permite identificar servicios independientemente de
+la direcci\'on IP u hostname de la instancia de servidor que lo expone
+o del load-balancer detr\'as del cual se encuentra esa instancia.
+
+\paragraph{}
+Lo anterior permite reducir la complejidad de la gesti\'on de los servicios,
+considerando que hay cerca de 203 instancias en producci\'on (Enero 2018).
+y que, en general, un mismo servicio es desplegado en varias instancias.
+%
+En general un servicio es desplegado en todas las instancias de un mismo 
+cluster o dominio.
+Adem\'as la migraci\'on de servicios se realiza por clusters enteros
+(p.ej. de la plataforma 10.2 hacia 10.3.6).
+%
+Distintos clusters, a su vez realizan una partici\'on de los servicios.
+Ya sea para su administraci\'on, una asignaci\'on adecuada de los recursos
+o incluso por seguridad.
+
+\paragraph{}
+Por ese motivo, la identificaci\'on de servicios tambi\'en considera
+el \emph{grupo de nodos},
+cualquiera sea el mecanismo (cluster, dominio, load-balancer, etc.)
+como parte de la identificaci\'on de un servicio para su gesti\'on
+a trav\'es del Cat\'alogo.
+
+
+%     .  .      .  .      .  .      .  .      .  .      .  .      .  .      .  .
+\subsubsection{Tipos de servicio}
+\paragraph{}
+Actualmente (inicio 2018),
+los tipos de servicios considerados en el cat\'alogo son los servicios accesados
+por HTTP, sobre las plataformas WebLogic.
+
+\paragraph{}
+Aunque hay varios tipos de servicios m\'as --MQ, bases de datos, LDAP, EJBs, etc.--
+el cat\'alogo se centra inicialmente en servicios y aplicaciones web.
+
+
+%     .  .      .  .      .  .      .  .      .  .      .  .      .  .      .  .
+\subsubsection{Datos detallados de servicios}
+\paragraph{}
+La informaci\'on detallada provista acerca de los servicios depende del tipo 
+de informaci\'on recabada, y de las preguntas a las cuales responde:
+taxonom\'ia en excel, registros de servicios en OSBs, logs de accesos, etc.
+%
+Adem\'as de proporcionar informaci\'on \emph{acerca de} distintos aspectos
+de los servicios considerados, y de presentar distintas estructuras de datos,
+esas fuentes de informaci\'on est\'an distribu\'idas y son accesibles v\'ia distintos
+protocolos.
+
+\paragraph{}
+En consecuencia, de ser necesario, se mantiene una tabla espec\'ifica por
+tipo de informaci\'on a recabar acerca de los servicios.
+Tambi\'en se identifica el ``tipo'' de informaci\'on y
+su fuente, la que generalmente es identificable por un URL path de un cluster.
+
+\paragraph{}
+Cabe notar que no es siempre necesario crear una tabla nueva para cada tipo de informaci\'on.
+P.ej. en el caso del uso de los servicios, registrado en los logs de acceso,
+y en el caso de los registros de proxy services en OSBs,
+la pregunta actual es saber si hay alg\'un registro de los servicios en dichos repositorios.
+%
+Para ello es suficiente disponer de una lista de servicios y con la fecha en la cu\'al
+fueron encontrados en el repositorio correspondiente.
+
+
+%     .  .      .  .      .  .      .  .      .  .      .  .      .  .      .  .
+\subsubsection{Informaci\'on recabada}
+\paragraph{}
+El Cat\'alogo es alimentado a partir de informaci\'on recabada desde distintas fuentes
+(taxonom\'ia, OSBs, logs de acceso).
+Algunas de estas son m\'as confiables, otras est\'an m\'as actualizadas,
+algunas presentan elementos de planes futuros y expectativas acerca de los servicios.
+%
+Sobre todo al recabar informaci\'on acerca de los servicios, se obtienen ``pedazos''
+de informaci\'on que son consolidados en el cat\'alogo
+para describir y gestionar los servicios.
+
+\paragraph{}
+Tales listados son identificados y discriminados
+por medio del tipo de informaci\'on recabada,
+su fuente cuando hay varias del mismo tipo (no todas contienen los mismos servicios),
+la fecha y un indicador de la completitud de la informaci\'on recabada.
+%
+Discriminando el origen de los listados, es posible cotejar la informaci\'on recabada
+corregirla, mejorando as\'i la consistencia de la informaci\'on acerca de los servicios.
+
+\paragraph{}
+Por \emph{completitud} se entiende que la lista contiene
+todos los servicios registrados en la fuente de informaci\'on.
+As\'i se puede deducir que un servicio que no se encuentra en el listado puede
+considerarse como ya no registrado en la fuente de informaci\'on considerada.
+Los OSBs y logs de acceso son completos en ese sentido,
+aunque pueden cubrir distintos grupos de servicios.
+Mientras que la taxonom\'ia es incompleta.
+P.ej. una lectura es
+``si el URL path X no se encuentra en osbentelprod, es que no proporcionado por ese OSB'',
+``si el URL path Y no se encuentra en los logs de acceso (Elasticsearch), es que no ha sido usado''.
+
+\paragraph{}
+Las principales fuentes de informaci\'on, explotables actualmente,
+acerca de los servicios son las siguientes:
+
+\paragraph{}
+\begin{tabular}{lp{.7\textwidth}}
+    Logs de acceso
+    &
+    Los logs de acceso dan cuenta del \emph{uso real} de los servicios.
+    T\'ecnicamente son cargados por Logstash en Elasticsearch donde pueden
+    realizarse consultas.
+    \\
+    Taxonom\'ia
+    &
+    Arquitectura mantiene una taxonom\'ia de servicios web,
+    principalmente proxy services registrados en OSB.
+    %
+    La taxonom\'ia es guardada en una planilla Excel y es cargada al cat\'alogo
+    (release-1).
+    \\
+    Registro OSB
+    &
+    Entel tiene varios buses de servicio OSB y ALSB, los cuales exponene Proxy Services,
+    escondiendo su implementac\'on (Business Services), as\'i como composici\'on y 
+    transformaciones. Los Business Services est\'an constituidos por servicios web, 
+    MQ, \ldots
+\end{tabular}
+
+
+%     .  .      .  .      .  .      .  .      .  .      .  .      .  .      .  .
+\subsubsection{Grupos actuales}
+\paragraph{}
+Lo que sigue entrega cifras que fundamentan el uso del dominio como dato necesario
+para discriminar la informaci\'on acerca de los servicios,
+de manera de poder gestionarlos adecuadamente.
+
+\paragraph{}
+Entel aplica un esquema estandarizado de nombramiento de instancias de servidores.
+%
+T\'ecnicamente al extraer los access logs para alimentar Elasticsearch, 
+el Logstash de Entel reconstruye el dominio al cual pertenece cada URL invocada.
+
+\paragraph{}
+Se asume que es dato corresponde a los dominios WebLogic y/o clusters de servidores.
+
+\paragraph{}
+La tabla a continuaci\'on indica la cantidad m\'axima de dominios en las cuales
+distintas URL pueden aparecer. P.ej. \url{/testApp} est\'a instalada en 32 dominios.
+%
+Se consideran los 5.683 URL paths \emph{agrupados} (\verb|url_path_virtual|)
+que aparecen en los access logs
+de todos los OSB, ALSB y servidores WebLogic en producci\'on (Enero 2018).
+
+\paragraph{}
+\begin{tabular}{rlrl}
+    3.386 & url paths se encuentran en & 1 & dominio\\ 
+    2.287 & url paths se encuentran en & 2 & dominios\\ 
+        9 & url paths se encuentran en & 3 & dominios\\ 
+        1 & url path se encuentra en   & 32 & dominios\\
+\end{tabular}
+
+\paragraph{}
+Los url paths que est\'an en 2 dominios se encuentran en el dominio principal y
+en el dominio del Site B correspondiente, lo que parece indicar un proceso de migraci\'on.
+%
+Este es precisamente el tipo de informaci\'on relevante para la gesti\'on del ciclo
+de vida de los servicios.
+
+
+%. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+\subsection{Modelo f\'isico}\label{sec:multi-svclist-phys}
+\paragraph{}
+Esta secci\'on describe los principales elementos del modelo f\'isico.
+La figura \ref{fig:db-multi-load} presenta los stored procedures y tablas
+que dan soporte al modelo conceptual
+presentado (sec. \ref{sec:multi-svclist-ER}).
+La figura \ref{fig:db-multi-tables} identifica las vistas y tablas necesarias para
+desplegar el Cat\'alogo al usuario.
+
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=\textwidth]{db-multi-svclist-load.png}
+    \caption{Programas y stored procedures que alimentan las tablas desde m\'ultiples fuentes de informaci\'on, para presentar distintos aspectos de los servicios.}
+    \label{fig:db-multi-load}
+\end{figure}
+
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=\textwidth]{db-multi-svclist-tables.png}
+    \caption{Vistas y tablas que participan del despliegue de la informaci\'on de los servicios en el Cat\'alogo}
+    \label{fig:db-multi-tables}
+\end{figure}
+
+
+%     .  .      .  .      .  .      .  .      .  .      .  .      .  .      .  .
+\subsubsection{Listados hist\'oricos}
+\paragraph{}
+La informaci\'on acerca de los servicios es \emph{hist\'orica}.
+Ello queda reflejado en la columna \verb|FECH_LISTA| de la tabla
+\verb|GMD_NEG_LSTINFO| y por el hecho que esta tabla es parte de la llave primaria
+de las tablas de detalle (p.ej. \verb|GMD_NEG_TAXONOMIA_SERVICIO|).
+
+
+%     .  .      .  .      .  .      .  .      .  .      .  .      .  .      .  .
+\subsubsection{Detalle por fuentes de informaci\'on}
+\paragraph{}
+Cada fuente de informaci\'on proporciona ciertos detalles acerca de los servicios.
+Los elementos comunes son capturados en la tabla \verb|GMD_NEG_SVCDETALLE|,
+mientras que se debe crear una tabla espec\'ifica para los detalles espec\'ificos.
+
+\paragraph{}
+Tal es el caso para la informaci\'on de servicios proveniente de
+la taxonom\'ia (tabla \verb|GMD_NEG_SVCTAXONOMIA|)
+y de los OSB (tabla \verb|GMD_NEG_SVCOSB|).
+Sin embargo (por ahora) no es necesario para la informaci\'on de servicios
+extra\'ida de los logs de accesos, en ese caso tabla com\'un es suficiente.
+
+\paragraph{}
+Tambi\'en cabe notar que la misma tabla \verb|GMD_NEG_URLPATH| permite identificar los servicios
+y las fuentes de informaci\'on acerca de los mismos sin conflictos (ya que las fuentes de informaci\'on tambi\'en son servicios).
+
+
+%     .  .      .  .      .  .      .  .      .  .      .  .      .  .      .  .
+\subsubsection{Identificaci\'on de fuente de informaci\'on}
+\paragraph{}
+Cada fuente de informaci\'on es identificada
+por la clase de informaci\'on
+(tabla \verb|GMD_NEG_CLASEINFO|, columna \verb|VLOR_LSTCLASEINFO|)
+y servidor que guarda esa informaci\'on,
+el cual pertenece a dominio (cluster) y tiene un URL path de administraci\'on
+(ocup\'andose la tabla \verb|GMD_NEG_URLPATH| para identificarlo).
+%
+La tabla \ref{tab:svc-list-src} muestra c\'omo reconocer algunas fuentes actuales.
+
+\paragraph{}
+\begin{table}[htb]
+    \centering
+    \caption{Individualizando fuente de info acerca de los servicios ocupando tablas asociadas a GMD\_NEG\_LISTADO\_SERVICIOS} 
+    \begin{tabular}{llll}
+       \toprule 
+        \verb| VLOR_LSTCLASEINFO| & \verb| NOMB_GRUPONODOS| & \verb| NOMB_URLPATH| \\
+        \midrule
+        Taxonomia Arquitectura & local file           & \verb|TAXONOMIA_CONSOLIDADA.xlsx| \\
+        Access Logs              & \verb|elasticsearch| & \verb|/logstash-*/_search|\\
+        OSB Proxy Services       & osbmovilprod         & \verb|/sbconsole| \\
+        OSB Proxy Services       & alsbsrvprod          & \verb|/sbconsole| \\
+        \ldots & & \\
+       \bottomrule 
+    \end{tabular}\label{tab:svc-list-src}
+\end{table}
+
+
+%     .  .      .  .      .  .      .  .      .  .      .  .      .  .      .  .
+\subsubsection{Cargando la informaci\'on de servicios}
+\paragraph{}
+Para cargar la informaci\'on desde las distintas fuentes, se ocupa una tabla temporal
+(\verb|GMD_TMP_IMPORTA| en fig. \ref{fig:db-multi-load}).
+Dependiendo de la clase de informaci\'on, se cargan m\'as o menos campos.
+Luego un stored procedure realiza los chequeos necesarios, insertando valores faltantes
+en tablas de valores comunes para finalmente cargar la informaci\'on m\'as espec\'ifica.

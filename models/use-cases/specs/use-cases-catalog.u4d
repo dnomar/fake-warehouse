@@ -1,0 +1,57 @@
+digraph G {
+    rankdir="LR";
+    node     [fontsize=16, label="", shape=none, imagescale=true];
+    edge     [arrowhead="vee"];
+
+    actor ing       "Ingeniero"
+    actor archi     "Arquitecto"
+    actor chron     "Temporizador"
+    actor osbs      "Bus de Servicios"
+    actor logs      "Logs de accesos_._a servicios"
+    actor admin     "Administrador"
+    actor perfstats "M&#243;dulo_._de an&#225;lisis_._de performance"
+
+    subgraph cluster_0 {
+
+    usecase uc_120 "UC-120_._Visualizando servicios_._repertoriados en cat&#225;logo" color="gray" fontcolor="gray"
+    usecase uc_121 "UC-121_._Revisando actualizaciones_._del repertorio de servicios"
+
+    usecase uc_122 "UC-122_._Visualizando progreso_._y status de p&#225;gina"
+    usecase uc_123 "UC-123_._Visualizando_._indicadores de desempe&#241;o"
+
+    usecase uc_130 "UC-130_._Actualizando repertorio de servicios_._a partir de taxonom&#237;a en Excel" color="gray" fontcolor="gray"
+
+    usecase uc_131 "UC-131_._Actualizando repertorio de servicios_._a partir de logs de accesos"
+    usecase uc_132 "UC-132_._Actualizando repertorio de servicios_._a partir de proxy services_._expuestos en OSBs"
+    usecase uc_135 "UC-135_._Configurando alimentaci&#243;n_._del cat&#225;logo a partir de Elasticsearch_._como fuente de logs de accesos"
+    usecase uc_136 "UC-136_._Configurando alimentaci&#243;n_._del cat&#225;logo a partir de OSB"
+    usecase uc_134 "UC-134_._Especificando agrupamientos_._de instancias de servidores_._para estad&#237;sticas"
+    usecase uc_133 "UC-133_._Actualizando_._indicadores de desempe&#241;o_._a partir de logs de accesos"
+    usecase uc_137 "UC-137_._Listando grupos_._de instancias de servidores"
+
+    }//cluster
+
+    // tweak layout
+    // osbs -> chron [style="invis";]
+    {rank=same; ing archi admin chron} 
+    {rank=same; perfstats logs osbs}
+    
+    
+    uc_120 -> uc_121 [dir=back; label="<<extends>>" ]
+    uc_120 -> uc_122 [dir=back; label="<<extends>>" ]
+    uc_120 -> uc_123 [dir=back; label="<<extends>>" ]
+
+    uc_133 -> uc_137 [ label="<<include>>" ]
+
+    uc_132 -> osbs;
+    uc_136 -> osbs;
+    {uc_131,uc_133,uc_135} -> logs;
+
+    ing   -> uc_120;
+    archi -> uc_130;
+    chron -> {uc_131,uc_132};
+    admin -> {uc_134,uc_135,uc_136};
+    chron -> uc_133;
+    // perfstats -> uc_137;
+    uc_137 -> perfstats [dir=back]
+}

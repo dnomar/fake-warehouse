@@ -1,0 +1,15 @@
+digraph {
+    graph [splines=ortho]
+    node  [shape=record]
+
+    svc_info_type   [label="Info type"]
+    svc_info_type   [label="Info type"]
+    svc_info_list   [label="{Service list|list_date\nis_partial_list}"]
+    svc_info_detail [label="{Service info detail|...\n(info type specific)\n...}"]
+    URI       [label="{URI|url_path\nnode_group}"]
+
+    svc_info_list   -> svc_info_type   [dir=both arrowhead=tee  arrowtail=crow headlabel=list_type]
+    svc_info_list   -> URI             [dir=both arrowhead=tee  arrowtail=crow headlabel=src]
+    svc_info_list   -> svc_info_detail [dir=both arrowhead=tee   arrowtail=crow]
+    svc_info_detail -> URI             [dir=both arrowhead=crow  arrowtail=tee taillabel=svc]
+}

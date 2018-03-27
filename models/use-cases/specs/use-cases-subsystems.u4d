@@ -1,0 +1,26 @@
+digraph G {
+    rankdir="LR";
+    node     [fontsize=16, label="", shape=none, imagescale=true];
+    compount=true;
+
+    actor arqui "Arquitecto"
+    actor chron "Temporizador"
+    actor osbs  "Buses de Servicios"
+    actor logs  "Registro de Accesos_._a Servicios"
+    actor admin "Administrador"
+
+    subgraph cluster0 {
+      node [shape=box];
+
+      cat   [label="Catalogo";];
+      stats [label="Estadisticas";];
+
+    }//cluster
+    
+
+    {admin,arqui,chron} -> cat   [lhead=cluster0];
+    {admin,arqui} -> stats [lhead=cluster0];
+    cat   -> osbs [ltail=cluster0];
+    cat   -> logs [ltail=cluster0];
+    stats -> logs [ltail=cluster0];
+}

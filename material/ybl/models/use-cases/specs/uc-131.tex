@@ -1,0 +1,64 @@
+%. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+% uc-131 Temporizador Actualizando repertorio de servicios a partir de logs de accesos
+\subsection{\ucCXxxiFullName{}}\label{uc-131}
+\textcolor{gray}{V\'ease la realizaci\'on del caso de uso, sec. \ref{sec:ucr-131}}
+
+\subsubsection*{Descripci\'on}
+\paragraph{}
+Peri\'odicamente (p.ej. cada d\'ia)
+el Temporizador gatilla la actualizaci\'on del Cat\'alogo
+a partir de la informaci\'on de \emph{uso} de los servicios,
+la cual es registrada por cada servidor en los logs de acceso
+(t\'ipicamente web server y app servers).
+%
+El Cat\'alogo recupera la lista servidores Elastic que tiene registrados
+(Entel carga los logs de accesos en Elastic).
+Para cada uno, recaba la lista de servicios accesados por cada instancia
+y actualiza el repertorio de servicios.
+
+
+%     .  .      .  .      .  .      .  .      .  .      .  .      .  .      .  .
+\subsubsection*{Resultado deseado}
+\paragraph{}
+Los servicios realmente son usados en producci\'on quedan repertoriados en el Cat\'alogo.
+
+
+%     .  .      .  .      .  .      .  .      .  .      .  .      .  .      .  .
+\subsubsection*{Objetivos del usuario}
+\paragraph{}
+Identificar discrepancias entre el \emph{uso} real de los servicios
+y su existencia nominal en el Cat\'alogo.
+
+
+%     .  .      .  .      .  .      .  .      .  .      .  .      .  .      .  .
+\subsubsection*{Dependencias}
+%\begin{tabular}{lp{.8\textwidth}}
+%    Requiere: & \ucCXxxvFullName{} (sec. \ref{uc-135}). \\
+%    Precede: & \ucCXxFullName{} (sec. \ref{uc-120}). \\
+%\end{tabular}
+--
+
+%     .  .      .  .      .  .      .  .      .  .      .  .      .  .      .  .
+%\subsubsection*{Pre-condiciones}
+
+
+%     .  .      .  .      .  .      .  .      .  .      .  .      .  .      .  .
+\subsubsection*{Escenarios}
+\paragraph{}
+
+\begin{itemize}
+    \item
+        {\bf Conexi\'on a Elasicsearch fall\'o.}
+        Si no es posible conectarse a Elasticsearch
+        o si Elasticsearch falla en retornar datos,
+        entonces se registra el intento en el log de cambios al Cat\'alogo.
+    \item
+        {\bf Falla parcial.}
+        Si alguna de las consultas a Elasticsearch falla, 
+        entonces no se carga la informaci\'on obtenida y 
+        entonces se registra el intento en el log de cambios al Cat\'alogo.
+\end{itemize}
+
+
+%     .  .      .  .      .  .      .  .      .  .      .  .      .  .      .  .
+%\subsubsection*{Aspectos t\'ecnicos}

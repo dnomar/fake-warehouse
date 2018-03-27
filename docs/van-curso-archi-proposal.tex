@@ -1,0 +1,423 @@
+\documentclass[11pt]{article}
+
+
+%\usepackage[paper=letterpaper,left=3cm,top=1.5cm,bottom=1.5cm,twoside=false]{geometry} %usar showframe para ver pos.
+\usepackage[paper=letterpaper,top=2.5cm,left=3cm,right=3cm,bottom=3cm,twoside=false]{geometry} %usar showframe para ver pos.
+%\usepackage{fancyhdr}
+%\pagestyle{fancy}
+
+%\usepackage{graphicx}
+%\usepackage{xcolor}
+%\usepackage{tikz}
+%\usetikzlibrary{chains,fit,matrix,positioning,shapes}
+
+% Prevents floating graphics or tables from floating into the next section.
+%\usepackage[section]{placeins}
+%\usepackage{import}
+\usepackage{hyperref}
+\hypersetup{
+    pdfborder={0 0 0}
+}
+%\usepackage[toc,page,title,titletoc,header]{appendix}
+%\usepackage{booktabs}
+
+%\usepackage{biblatex}
+%\addbibresource{mci-sims-bibliography.bib}
+
+%\usepackage{enumitem}
+%\usepackage{verbatim}
+%\usepackage[right]{lineno}
+%\usepackage[printwatermark]{xwatermark}
+%\newwatermark[allpages,color=red!10,angle=45,scale=3,xpos=0,ypos=0]{BORRADOR \scriptsize{\prjVersion{}}}
+
+
+%. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+\newcommand{\Cliente}{Van-Gerald Olivares Ingenier\'ia EIRL}
+\renewcommand{\contentsname}{\'Indice del contenido}
+\renewcommand{\listfigurename}{Lista de figuras}
+\renewcommand{\listtablename}{Lista de tablas}
+\renewcommand{\refname}{Referencias}
+%\renewcommand{\chaptername}{Cap\'itulo}
+
+
+% ======================================================================
+\begin{document}
+% ======================================================================
+%\title{\begin{tabular}{c}\prjName{}\\\large Modelo Funcional \scriptsize{\prjVersion{}}\end{tabular}}
+%\author{Y. Bossel}
+%\date{\today}
+%\maketitle
+
+%\listoffigures
+%...ybl... \listoftables
+%\newpage
+
+\noindent{}JustCodeIT SpA\hfill{}
+\vspace{1cm}
+\begin{center}
+\begin{huge}
+   T\'ecnicas de Dise\~no Arquitectural \'Agil
+\end{huge}\\[2ex]
+\begin{Large}
+   Propuesta de Servicio de Capacitaci\'on 
+\end{Large}
+\end{center}
+\vspace{1cm}
+
+\hfill{}%
+\begin{scriptsize}
+\begin{tabular}{rl}
+    Fecha & 2016-05-31\\
+    Autor & Y. Bossel\\
+\end{tabular}
+\end{scriptsize}
+
+%-------------------------------------------------------------------------------
+\section{Introducci\'on}
+\paragraph{}
+\Cliente{} realiza proyectos inform\'aticos, a veces en forma individual y otras veces
+delegando parte del trabajo.
+
+\paragraph{}
+Los tiempos siempre ajustados para la definici\'on del proyecto implican 
+una cuota de interpretaci\'on que generalmente se resuelve en el mismo c\'odigo.
+A lo anterior se le suma un limitado presupuesto para establecer las definiciones
+de dise\~no, as\'i como para controlar el desarrollo.
+%
+Todo lo cual genera un riesgo tangible para el cumplimiento de los compromisos,
+como para la rentabilidad del proyecto.
+
+\paragraph{}
+En un an\'alisis de la situaci\'on \Cliente{} 
+detect\'o una oportunidad para reducir los riesgos por medio de
+capacitaci\'on a nivel metodol\'ogico para acotar, definir y controlar
+m\'as precisamente los proyectos de desarrollo de software que lleva.
+Ello siempre cuando se respete la necesidad de agilidad propia de una PYME.
+
+\paragraph{}
+Por medio de este documento,
+JustCodeIT SpA presenta una propuesta de servicio de capacitaci\'on
+pr\'actica en t\'ecnicas de dise\~no arquitectural \'agil,
+como forma de atender las necesidades anteriores.
+
+\tableofcontents
+
+
+\newpage
+%-------------------------------------------------------------------------------
+\section{Resumen ejecutivo}
+Este documento presenta la propuesta de curso personalizado enfocado al
+dise\~no arquitectural, seguimiento \'agil y dise\~no efectivo.
+
+\paragraph{}
+La agilidad de la metodolog\'ia proviene 
+de un enfoque que revela y prioriza la resoluci\'on de indefiniciones,
+para allanar el terreno para los desarrolladores,
+ello en la medida de lo posible.
+%
+El orden ganado, adem\'as de reducir los errores, proporciona una herramienta
+de control y seguimiento en torno a componentes concretos,
+lo que proporciona un terreno para negociar con el Cliente en base a entregables tangibles.
+
+\paragraph{}
+El curso es individual y est\'a orientado al desarrollo de un conocimiento 
+pr\'actico, sobre la base de proyectos reales del Cliente.
+%
+Su duraci\'on inicial es de 6 meses en base a una clase semanal de 1h30.
+
+\paragraph{}
+En lo que sigue se describen los objetivos, los contenidos del curso,
+la modalidad de clases y la oferta econ\'omica.
+
+
+%-------------------------------------------------------------------------------
+\section{Descripci\'on del servicio}
+
+%. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+\subsection{Objetivos}
+El curso tiene por objetivo, desarrollar en forma pr\'actica las habilitades
+de los asistentes, para:
+\begin{itemize}
+  \item
+      Reducir el costo de dise\~nar, pudiendo r\'apidamente revisar un elemento
+      para identificar y hacerse cargo de las indefiniciones.
+  \item 
+      Identificar los principales riesgos funcionales y t\'ecnicos de un proyecto.
+  \item 
+      Establecer las fronteras del proyecto.
+  \item 
+      Reducir el costo de mantener la documentaci\'on sincronizada con el dise\~no.
+  \item 
+      Realizar un dise\~no arquitectural que sirva a los desarrolladores y 
+      a la definici\'on de la propuesta de proyecto.
+  \item 
+      Realizar un seguimiento de bajo costo y efectivo del proyecto que focalice
+      los desarrolladores, que informe acerca del estado tangible del avance
+      del proyecto y permita visualizar el valor funcional ganado.
+  \item 
+      Recojer las indefiniciones que surgen durante el proyecto.
+  \item 
+      Controlar la completitud y correcci\'on de los dise\~nos.
+  \item 
+      Pasar del an\'alisis al dise\~no detallado en forma ordenada.
+  \item 
+      Ganar una experiencia pr\'actica de los elementos anteriores.
+\end{itemize}
+
+
+%. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+\subsection{Contenidos}
+La capacitaci\'on propuesta junta tres cursos que se detallan en adelante.
+Estos contenidos ser\'an ajustados semana a semana, de acuerdo al avance.
+Cabe destacar que se trata de un curso \emph{pr\'actico}, por lo que los contenidos
+presentan los temas a abordar.
+
+
+% .      .  .      .  .      .  .      .  .      .  .      .  .      .  .      .
+\subsubsection*{Del problema a la arquitectura-base}
+\paragraph{En resumen} El curso ayuda a capturar y ordenar de manera minimalista
+la informaci\'on necesaria para establecer la arquitectura base de un proyecto.
+
+\paragraph{El objetivo}
+es "desarrollar el m\'usculo" abordando las preguntas y decisiones que realmente
+aportan a los desarrolladores, es decir aquellas que reducen el nivel de indefinici\'on,
+sin perderse en documentaci\'on innecesaria.
+
+\paragraph{Contenidos.}
+Temas abordados:
+\begin{itemize}
+\item estructura documental \'agil
+      \begin{itemize}
+\item     porqu\'e
+\item     cu\'al es
+\item     c\'omo ocuparla
+      \end{itemize}
+\item problem statement
+      \begin{itemize}
+\item     generar dudas / d\'onde dejarlas:
+\item         dudas, inquietudes, puntos de cuidado, elementos a validar, etc.
+\item     diferencia entre
+          \begin{itemize}
+\item         el dominio del problema
+\item         el dominio de la soluci\'on
+\item         los requerimientos
+          \end{itemize}
+\item     foco en el dominio del problema
+\item     herramientas para generar preguntas
+          \begin{itemize}
+\item         diagrama de contexto
+\item         modelo del dominio
+\item         diagrama de contexto
+\item         interfaces
+\item         wbs inicial
+          \end{itemize}
+      \end{itemize}
+\item project definition
+\item especificaci\'on funcional
+      \begin{itemize}
+\item     casos de uso 
+          \begin{itemize}
+\item         1er corte
+\item         qu\'e definir
+\item         priorizaci\'on
+          \end{itemize}
+\item     interfaz de usuarios
+          \begin{itemize}
+\item         principales pantallas
+\item         navegaci\'on gruesa
+          \end{itemize}
+\item     reportes
+      \end{itemize}
+\item arquitectura
+      \begin{itemize}
+\item     requerimientos arquitecturales
+\item     deciciones arquitecturales
+\item     casos de uso arquitecturalmente relevantes
+      \end{itemize}
+\item dise\~no arquitectural
+      \begin{itemize}
+\item     realizaciones de casos de uso
+\item     hacer solo lo que se ocupar\'a
+      \end{itemize}
+\end{itemize}
+
+% .      .  .      .  .      .  .      .  .      .  .      .  .      .  .      .
+\subsubsection*{Realizando casos de uso}
+
+\paragraph{En resumen} cuando el desarrollador est\'a programando, ve a lo m\'as 60 l\'ineas de c\'odigo, en un solo m\'etodo, que pertenece a un solo componente. En ciertos casos es necesario articular las responsabilidades o las interacciones de varios objetos que colaboran en la realizaci\'on de un escenario o funcionalidad.
+
+\paragraph{El objetivo} es entregar una forma \'agil de dise\~no que apunta a aclarar las dudas (en vez de describir lo que ya est\'a hecho) para revelar las dudas, tomar decisiones y orientar el desarrollo. Esto permite dise\~nar solamente cuando es necesario.
+
+\paragraph{Contenidos.}
+Temas abordados:
+\begin{itemize}
+\item para qui\'en sirve
+      \begin{itemize}
+\item     para qui\'en es todo eso
+\item     c\'omo ocupar los documentos (referencias, referencias, referencias)
+\item     cu\'ando hacerlo
+\item     qu\'e preguntarse
+\item     el desarrollador es el centro del mundo
+      \end{itemize}
+\item estructura documental \'agil
+\item 4+1 views
+\item unit tests
+      \begin{itemize}
+\item     as learning tool
+\item     as design tool
+      \end{itemize}
+\item modelado minimalista (use-case realization)
+      \begin{itemize}
+\item     revisi\'on r\'apida del caso de uso
+          \begin{itemize}
+\item         producto
+\item         objetivo
+\item         escenarios
+          \end{itemize}
+\item     diagrama de robustez
+          \begin{itemize}
+\item         an\'alisis
+\item         para identificar
+              \begin{itemize}
+\item             fronteras
+\item             entidades
+\item             principales operaciones
+              \end{itemize}
+\item         como gu\'ia - to do list
+          \end{itemize}
+\item     vopc
+          \begin{itemize}
+\item         siguiendo un escenario
+\item         para saber qu\'e hay que hacer
+\item         verificar que cierra (correcto) \ldots no siempre necesario, depende del nivel de detalle
+          \end{itemize}
+\item     asignar packages
+\item     asignar componentes
+\item     (a veces) interacciones complejas
+\item     actualizar decisiones de dise\~no
+\item     solo ocupar lo que responde la inquietud a la mano
+      \end{itemize}
+\item imprimir el VOPC y seq. diag. (son una gu\'ia del desarrollo)
+\item c\'omo documentar el c\'odigo
+      \begin{itemize}
+\item     a) responsabilidaded
+\item     b) colaboraciones
+\item     la javadoc como una gu\'ia de desarrollo
+          \begin{itemize}
+\item         qu\'e inputs
+\item         qu\'e return
+\item         escenarios
+\item             combinaciones de par\'ametros
+\item         excepciones
+          \end{itemize}
+      \end{itemize}
+\end{itemize}
+
+
+
+% .      .  .      .  .      .  .      .  .      .  .      .  .      .  .      .
+\subsubsection*{Seguimiento \'agil de proyectos para clientes tradicionales}
+\paragraph{En resumen} este curso organiza las informaci\'on del avance del proyecto en base a los entregables y resultados tangibles.  Se articula el lenguaje de los desarrolladores (construyen componentes), del jefe de proyecto (fases, hitos, avance concreto, qu\'e hay que destrabar), del cliente (es tangible el avance, el desarrollo est\'a generando el valor/funcionalidades por el cual se paga) y del arquitecto (est\'a el equipo focalizado, se est\'a construyendo coherentemente).
+
+\paragraph{El objetivo} es disponer de un instrumento \'agil (en Excel) que articula las visiones anteriores y permite las distintas lecturas seg\'un el rol/visi\'on del interesado. Junto con identificar r\'apidamente desviaciones, otro objetivo es cuantificar el avance concreto del proyecto.
+
+\paragraph{Contenidos.}
+Temas abordados:
+\begin{itemize}
+\item la planilla de seguimiento
+\item como solicitar info
+      \begin{itemize}
+\item     no cerrar si no est\'a realmente terminado
+\item     mejor mostrar menos que mas y luego bloquearse
+      \end{itemize}
+\item como llenarla
+      \begin{itemize}
+\item     al inicio del proyecto
+\item     durante la especificaci\'on de casos de uso
+\item     durante el dise\~no arquitectural
+\item     durante la construcci\'on
+      \end{itemize}
+\item c\'omo focalizar el trabajo
+\item indicadores de desviaci\'on
+      \begin{itemize}
+\item     muchos azules
+\item     abertura, cierre
+\item     no-horizontalidad
+      \end{itemize}
+\item destrabar bloqueos
+\item involucrar al cliente, c\'omo mostrarle la informaci\'on
+\item distintas lecturas
+      \begin{itemize}
+\item     del cliente
+\item     del programador
+\item     del JdP
+      \end{itemize}
+\item informar % de avance
+\item evaluar tiempo restante
+\item c\'omo agrupar casos de uso por fase
+\item de los escenarios
+\end{itemize}
+
+
+%. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+\subsection{Desarrollo de las clases}
+Se considera una clase semanal de 1h30, la cual introduce los conceptos
+y prepara el estudiante para realizar los ejercicios que los ponen en pr\'actica.
+
+\paragraph{Ejercicios}
+Cada clase conlleva ejercicios a realizar en forma personal.
+Estos deben ser entregados antes de la siguiente clase para permitir 
+una revisi\'on previa y su correcci\'on en la clase siguiente.
+
+\paragraph{}
+Cabe destacar que los ejercicios son la clave para lograr la efectividad planteada
+en los objetivos de este curso.
+
+
+%. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+\subsection{Lugar}
+El lugar y horario de clases se definir\'a de com\'un acuerdo.
+
+
+%. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+\subsection{Duraci\'on}
+Esta capacitaci\'on tiene una duraci\'on de 6 meses.
+
+\paragraph{}
+Cualquiera de las partes podr\'a suspender las clases en cualquier momento, 
+previa notificaci\'on por email y pago de las horas de clase y preparaci\'on
+ya realizadas.
+
+
+%-------------------------------------------------------------------------------
+\section{Oferta econ\'omica}
+La valoraci\'on del curso se establece sobre la base siguiente:
+\begin{itemize}
+  \item 1h30 de clase por semana
+  \item 0h45 de preparaci\'on de cada clase
+  \item \$18.600 por hora de clase o de preparaci\'on
+  \item Pago mensual de la suma de las horas de clase y de preparaci\'on
+      efectivamente ocupadas, aplicando los siguientes l\'imites:
+      \begin{itemize}
+        \item M\'aximo \$180.000 por mes
+        \item Todo tiempo de clase que supera 1h30, semanal, es gratis
+        \item Todo tiempo de preparaci\'on que supera 0h45, semanal, es gratis
+        \item Horas de clase o preparaci\'on remuneradas fuera de esos l\'imites
+            ser\'an expl\'icitamente acordadas por email
+      \end{itemize}
+\end{itemize}
+
+
+%. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+\subsection{Modalidad de pagos}
+Se realizar\'a un pago mensual de las clases (y su preparaci\'on) efectivamente
+realizadas, con la emisi\'on de una factura excenta de IVA.
+
+
+
+
+
+
+% ======================================================================
+\end{document}
+% ======================================================================

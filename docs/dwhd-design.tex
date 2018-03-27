@@ -1,0 +1,220 @@
+\documentclass[11pt,letterpaper]{report}
+
+% NEXT
+% ====
+%
+%
+%
+%
+
+
+%\usepackage[paper=letterpaper,left=3cm,top=2cm,bottom=2cm,twoside=false]{geometry} %usar showframe para ver pos.
+\usepackage[paper=letterpaper,top=2.5cm,left=3cm,right=3cm,bottom=3cm,twoside=false]{geometry} %usar showframe para ver pos.
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{appendix}
+\usepackage{graphicx}
+\usepackage{minted}
+\usepackage{xcolor}
+\usepackage{tikz}
+%
+% \usepackage{amsmath}
+% \usepackage{amssymb}
+
+
+% Prevents floating graphics or tables from floating into the next section.
+\usepackage[section]{placeins}
+\usepackage{import}
+\usepackage{hyperref}
+\hypersetup{
+    pdfborder={0 0 0}
+}
+\usepackage{lineno}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{titling}
+\usepackage{verbatim}
+
+\import{.}{common.tex}
+
+\fancyhead{}
+%\fancyhead[RE,RO]{\includegraphics[scale=.7]{my-logo-161x82.png}}
+\fancyhead[LE,LO]{\slshape \leftmark}
+
+% ======================================================================
+\begin{document}
+% ======================================================================
+
+\begin{titlepage}
+    \thispagestyle{empty}
+    \pagenumbering{gobble}
+    \title{\Huge\prjName{}\\[15px]\huge Documento de dise\~no\\{\tiny \prjVersion{}}\\[40px]}
+    \author{Y. Bossel - Everis}
+%    \date{\today}
+\end{titlepage}
+\maketitle
+
+\newpage
+\pagenumbering{roman}
+
+\import{./}{design-changelog.tex}
+
+\newpage
+\tableofcontents
+\listoffigures
+%\listoftables
+
+\newpage
+\pagenumbering{arabic}
+
+%===============================================================================
+\chapter{Acerca del proyecto}
+% Project Definition (as a SOW preparation)
+\paragraph{}
+El proyecto tiene como objetivo \ldots
+
+
+%%------------------------------------------------------------------------------
+%\section{Foco de la soluci\'on}
+%% Foco en la soluci\'on
+%%  (a) los elementos que la influencian, impactan, le dan forma
+%%  (b) forma que tiene y descripcion de su forma desde varias perspectivas
+%%  (c) validacion rnf, funcional, riesgos
+%%
+%% Otros documentos tienen los requerimientos, modelo del dominio, etc.
+%
+%%..............................................................................
+%\subsection{Prop\'osito}
+%
+%%..............................................................................
+%\subsection{Alcance}
+%
+%%..............................................................................
+%\subsection{Referencias}
+%
+%%..............................................................................
+%\subsection{Resumen del documento}
+%
+%
+%%------------------------------------------------------------------------------
+%\section{Antecedentes}
+%%			← stay focused
+%
+%%..............................................................................
+%\subsection[Contexto del proyecto]{Resumen del contexto del project}
+%
+%%..............................................................................
+%\subsection{Comienzo del project}
+%
+%%..............................................................................
+%\subsection[Planteamiento del problema]{Resumen del planteamiento del problema}
+%
+%%..............................................................................
+%\subsection{Caracter\'isticas de la soluci\'on}
+%
+%%..............................................................................
+%\subsection{Valor de negocio de la soluci\'on}
+%
+%
+%%..............................................................................
+%\subsection{Dimensiones y desempe\~no actuales}
+%%		← ref to size & perf req + Support of ~
+
+
+%===============================================================================
+\chapter{Modelo de casos de uso}\label{chap:uc-model}
+
+\import{../models/use-cases/specs/}{use-cases-subsystems_desc.tex}
+
+\paragraph{}
+A continuaci\'on se describe el m\'odulo de Cat\'alogo de Servicios.
+Sus casos de uso se encuentran graficados en la figura
+\ref{fig:use-cases-catalog}.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=.6\textwidth]{../models/use-cases/specs/use-cases-subsystems.png}
+    \caption{Grupos de funcionalidades.}\label{fig:use-cases-subsystems}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{../models/use-cases/specs/use-cases-catalog.png}
+    \caption{Casos de uso -- cat\'alogo.}\label{fig:use-cases-catalog}
+\end{figure}
+
+
+%-------------------------------------------------------------------------------
+\section{Casos de uso}
+\paragraph{}
+Esta secci\'on describe cada caso de uso. 
+M\'as que una especificaci\'on normativa,
+tiene por objetivo decribir el funcionamiento esperado del Cat\'alogo,
+identificando los objetivos de los actores, el resultado esperado y
+los principales escenarios de uso.
+
+\import{../models/use-cases/specs/}{uc-131.tex}
+\import{../models/use-cases/specs/}{uc-132.tex}
+
+
+%===============================================================================
+\chapter{Vista de componentes}
+\paragraph{}
+A continuaci\'on son presentado succintamente algunos elementos comunes de
+la aplicaci\'on web del Cat\'alogo de servicios.
+
+
+%-------------------------------------------------------------------------------
+\section{Packages}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=\textwidth]{../models/component-model/deps-packages.png}
+    \caption{Capa web (release 1), dependencias entre packages.}
+    \label{fig:pkg-deps}
+\end{figure}
+
+\import{../models/component-model/}{deps-packages_desc.tex}
+
+
+%-------------------------------------------------------------------------------
+\import{../models/component-model/}{cmp-01-main-and-di.tex}
+\import{../models/component-model/}{cmp-02-batches.tex}
+
+
+%===============================================================================
+\chapter{Vista de datos}
+\paragraph{}
+A continuaci\'on son presentado los elementos del modelo de datos.
+
+\import{../models/data-model/}{db-multi-svclist.tex}
+
+
+
+%===============================================================================
+\chapter{Realizaci\'on de casos de uso}\label{chap:ucr}
+
+\import{../models/use-cases/ucr/}{ucr-131.tex}
+\import{../models/use-cases/ucr/}{ucr-132.tex}
+
+
+%= - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = -
+\appendix
+
+%===============================================================================
+\chapter{Configuraci\'on}
+\paragraph{}
+A continuaci\'on se decriben los principales elementos a configurar.
+\ldots
+
+
+%===============================================================================
+\chapter[Batches setup]{Setup de batches de extracci\'on y carga de servicios}
+\textcolor{gray}{V\'ease tambi\'en componentes sec. \ref{sec:cmp-02}}
+\paragraph{}
+\verbatiminput{../code/scripts/README}
+
+
+% ======================================================================
+\end{document}
+% ======================================================================

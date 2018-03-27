@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration strict="true">
+  <Properties>
+      <Property name="filename">target/ybl.log</Property>
+      <Property name="mypattern">%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Property>
+  </Properties>
+  <Appenders>
+    <Appender type="Console" name="STDOUT">
+      <Layout type="PatternLayout" pattern="${mypattern}"/>
+    </Appender>
+    <Appender type="File" name="LogFile" fileName="${filename}">
+      <Layout type="PatternLayout">
+        <Pattern>${mypattern}</Pattern>
+      </Layout>
+    </Appender>
+  </Appenders>
+  <Loggers>
+    <Root level="error">
+      <AppenderRef ref="LogFile"/>
+      <AppenderRef ref="STDOUT"/>
+    </Root>
+    <Logger name="cl" level="debug" additivity="false">
+      <AppenderRef ref="LogFile"/>
+    </Logger>
+  </Loggers>
+</Configuration>

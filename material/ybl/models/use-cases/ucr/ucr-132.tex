@@ -1,0 +1,44 @@
+%-------------------------------------------------------------------------------
+\section{UCR-132: \ucCXxxiiTitle{}(realizaci\'on)}\label{sec:ucr-132}
+\textcolor{gray}{V\'ease la especificaci\'on del caso de uso, sec. \ref{uc-132}}
+
+
+%. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+\subsection{UCR-132 VOPC}
+\paragraph{}
+La figura \ref{fig:ucr-132-vopc} muestra la composici\'on del batch de actualizaci\'on
+de la lista de URIs. Algunas consideraciones:
+
+\begin{itemize}
+    \item
+        El Cat\'alogo mantiene la lista de URL de conexi\'on (t3) a cada cluster OSB
+        desde los cuales s puede actualizar autom\'aticamente la lista de Proxy services
+        registrados en el cat\'alogo.
+    \item
+        El nodo de administraci\'on de cada cluster OSB tiene el registro
+        de los Proxy services.
+    \item
+        La extracci\'on de las URI de los Proxy services guarda:
+        la URL del cluster OSB que lo expone, el nombre y la URI de cada Proxy service.
+        As\'i es posible distinguir servicios duplicados (en distintos OSBs).
+    \item
+        La carga de los Proxy services a actualizar en el Cat\'alogo se realiza por medio de
+        por una tabla paso y un stored procedure.
+    \item
+        La figura no muestra las tablas actualizadas por \verb|sp_update_osb_proxy_svc|.
+    \item
+        Las credenciales para el acceso a los servidores se mantienen en una archivo
+        CSV encriptado.
+        El proceso que gatilla el batch es el due\~no de la clave para desencriptar
+        el archivo de credenciales.
+        \\
+        La URL del servidor sirve de llave:
+        cada fila tiene la URL del servidor, el usuario y la clave.
+\end{itemize}
+
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics[width=\textwidth]{ucr-132-vopc.png}
+    \caption{UC-132 VOPC.}\label{fig:ucr-132-vopc}
+\end{figure}
+
