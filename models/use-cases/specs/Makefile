@@ -1,5 +1,5 @@
 
-UML4DOT=~/scripts/uml4dot-old.sh
+UML4DOT=~\scripts\
 UML_SOURCES := $(wildcard ./*.u4d)
 
 .PHONY:	all clean view

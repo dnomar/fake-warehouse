@@ -1,0 +1,41 @@
+package cl.emagina.curso.builderstudy;
+
+/**
+*@composed - - - Person
+*@depend - <instanciate> - PersonBuilder
+
+*/
+class App{}
+
+/**
+*@composed - - - PersonBuilder
+*/
+class Person{
+	public String nombre;
+	public String apellido;
+	public String edad;
+	public String sexo;
+	
+	Person (PersonBuilder pb){}
+	
+	public void printPerson(){};
+	
+}
+
+
+interface IPBuilder{
+	
+	public PersonBuilder nombre(String nom,String apell){};
+	public PersonBuilder edad(String edad){};
+	public PersonBuilder direccion(String direccion){};
+	public PersonBuilder sexo(String sexo){};
+}
+
+class PersonBuilder implements IPBuilder{
+	
+	public PersonBuilder nombre(String nom,String apell){};
+	public PersonBuilder edad(String edad){};
+	public PersonBuilder direccion(String direccion){};
+	public PersonBuilder sexo(String sexo){};
+	public Person build();
+}

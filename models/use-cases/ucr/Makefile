@@ -1,15 +1,19 @@
 
-UML_SOURCES := $(wildcard ./ucr-*.java ./ftr-*.java)
+UML_SOURCES:= $(wildcard ucr-*.java)	
 
-.PHONY:	all clean view
+.PHONY:	all 
 
-all: $(UML_SOURCES:.java=.png)
-
-view: $(UML_SOURCES:.java=.png)
-	eog $<
-
+all:$(UML_SOURCES:.java=.png) touch cleanf
+	
 %.png: %.java
 	umlgraph $* png
 
-clean:
-	rm -f {ucr,ftr}-*.png
+touch:func-spec.pdf
+
+func-spec.pdf: func-spec.tex
+	pdflatex func-spec.tex
+
+cleanf:
+	rm func-spec.log
+	rm func-spec.toc
+	rm func-spec.aux

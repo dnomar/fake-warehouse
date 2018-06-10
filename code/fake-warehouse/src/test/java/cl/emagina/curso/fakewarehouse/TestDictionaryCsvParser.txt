@@ -1,0 +1,23 @@
+package cl.emagina.curso.fakewarehouse;
+
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
+import org.junit.Test;
+import java.io.File;
+
+import java.io.Reader;
+import java.io.BufferedReader;
+import java.io.StringReader;
+import cl.emagina.curso.fakewarehouse.parsers.DictionaryCsvParser;
+
+public class TestDictionaryCsvParser{
+	
+	
+	public void deberia_retornar_sku_y_desc(){
+		
+
+		
+	}
+	
+
+}

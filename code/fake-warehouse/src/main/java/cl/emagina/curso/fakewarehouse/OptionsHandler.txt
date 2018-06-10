@@ -1,0 +1,27 @@
+package cl.emagina.curso.fakewarehouse;
+
+import parser.*;
+
+public class OptionsHandler{
+	
+	private String[] args;
+	private IParser parser;
+	
+	public OptionsHandler(String[] args){
+		
+		switch (args[7]){
+			
+			case "CSV": this.parser=new DictionaryCsvParser(new BufferedReader(new FileReader(args[1])));
+			break;
+			
+			default: throw new IllegalArgumentException ("Format File not suported");
+		}
+		
+	}
+	
+	public void export(DictionaryHandler dh){
+		
+
+	}
+	
+}

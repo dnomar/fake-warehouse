@@ -1,0 +1,32 @@
+interface Webpay{
+	public void enviarPago();
+}
+
+
+interface Paypal{
+	public void sendPayment();
+}
+
+
+/**
+ *@has - - - MoneyAdapter
+ */
+
+class CarroCompra implements Webpay{}
+
+/**
+ *@composed - - - Webpay
+ *@depend - <implements> - CarroCompra
+ */
+class Client{}
+
+/**
+ *@has - - - Paypal
+ *@depend - <implements> - ShopCart
+ */
+class MoneyAdapter implements Webpay{}
+
+
+class ShopCart implements Paypal{
+	public void sendPayment();
+}

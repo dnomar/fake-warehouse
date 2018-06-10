@@ -1,0 +1,33 @@
+package cl.emagina.curso.fakewarehouse;
+
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
+import org.junit.Test;
+import java.io.File;
+
+import java.io.Reader;
+import java.io.BufferedReader;
+import java.io.StringReader;
+import java.util.*;
+
+public class TestFileHandler{
+	
+
+	public void no_deberia_Retornar_nada_si_linea_comienza_con_gato(){
+		
+		String st="#\nKind, SKU, Desc\n#lalallalala";
+		List<String> outList=new ArrayList<String>();
+		outList.add("#");
+		outList.add("Kind, SKU, Desc");		
+		outList.add("#lalallalala");		
+		
+		
+		BufferedReader rd=new BufferedReader(new StringReader(st));
+		
+		//Cuando
+		FileHandler cd=new FileHandler(rd);
+		
+		assertEquals(outList,cd.fileExport());
+	}
+
+}

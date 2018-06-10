@@ -1,0 +1,45 @@
+interface Beverage{
+	public String descripcion();
+	public int valor();
+}
+
+
+class Expresso implements Beverage{
+	public String descripcion();
+	public int valor();
+}
+
+/**
+ *@has - - - Beverage
+ *@stereotype abstract
+ */
+abstract class AddonDecorator implements Beverage{
+	AddonDecorator(Beverage b){};
+	
+	public String descripcion();
+	public int valor();
+}
+
+/**
+ *@has <super> - - Beverage
+ */
+class AddMilk extends AddonDecorator{
+
+	AddMilk(Beverage b){};
+	public String descripcion();
+	public int valor();
+}
+
+/**
+ *@has <super> - - Beverage
+ */
+class AddCaramel extends AddonDecorator{
+	AddCaramel(Beverage b){};
+	public String descripcion();
+	public int valor();	
+}
+
+/**
+ *@composed - - - Expresso
+ */
+class Client{}
