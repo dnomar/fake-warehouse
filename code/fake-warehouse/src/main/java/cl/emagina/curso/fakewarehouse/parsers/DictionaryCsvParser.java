@@ -10,8 +10,7 @@ import cl.emagina.curso.fakewarehouse.*;
 
 /**
  * Parses a SKU dictionary CSV into a
- * {@link cl.justcodeit.warehouse.core.DictionaryHandler DictionaryHandler}
- * <p></p>
+ * {@link cl.emagina.curso.fakewarehouse.DictionaryHandler DictionaryHandler}
  * <b>Format</b>
  * <pre>{@code
 #
@@ -39,13 +38,16 @@ public class DictionaryCsvParser {
     // methods
     //--------------------------------------------------------------------------
 
+
     /**
-     * Parses the CSV associated to this parser into the specified <tt>dest</tt>.
+     * Parses the CSV associated to this parser into the specified <tt>dest</tt>
+	 *
+	 * @param lotDh collection of DictionaryHandler to handle the exportation
      */
     public void exportTo( Lot<DictionaryHandler> lotDh ) {
 		
 		Scanner scn=new Scanner(this.rdr);
-		String arr,gato;
+		String arr,scnStr;
 		String[] los;
 		DictionaryHandler dict;
 		
@@ -53,10 +55,12 @@ public class DictionaryCsvParser {
 		//Recorre el Scanner verticalmente
 		while(scn.hasNextLine()==true){
 			//Verifica que la linea no comience con #
-			gato=scn.findInLine("#");
-			if(!"#".equals(gato)){
-				dict.dictionaryStart();				
-				arr=scn.nextLine();
+			//gato=scn.findInLine("#");
+			dict.dictionaryStart();				
+			arr=scn.nextLine();
+			arr=catLikeComment(arr);
+			System.out.println(arr);
+			if(arr!=null){
 				//System.out.println("Linea de Archivo: "+ arr);
 				los=arr.split(",");
 				dict.takeSku(los[1]);
@@ -68,5 +72,26 @@ public class DictionaryCsvParser {
 		}
 		lotDh.lotEnd();
     }
+	/**
+	 * Split a String in # char into 2 strings and return the left side of the 
+	 * original string
+	 * Example:
+	 * text1#text2 returns text1
+	 * 
+	 * param rawStr is a string whitout processing
+	 * return  Processed string
+	 */
+	
+	private String catLikeComment(String rawStr){
+		String[] arr; 
+		
+		if(rawStr.matches("[#]+")){
+			return null;
+		}else{
+			arr=rawStr.split("[#]+");
+			return arr[0];
+		}
+		
+	}
 	
 }

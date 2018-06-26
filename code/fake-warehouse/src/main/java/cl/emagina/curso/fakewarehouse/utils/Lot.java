@@ -39,6 +39,7 @@ public interface Lot<H> {
      * which will handle H type items one by one.
      * The producer invokes lotStart and the H instances to pass the produced
      * information.
+	 *@return H
      */
     H lotStart();
 
