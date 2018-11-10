@@ -28,9 +28,9 @@ public class SysoutInventoryWriter implements InventoryHandler{
 		this.pw.flush();
 	}
 	
-    public Lot<SkuHandler> takeItems(){
-		return null;
-	}
+    //public Lot<SkuHandler> takeItems(){
+		//return new ListOfSkus(pw);
+	//}
 	
     public void inventoryEnd(){
 		this.pw.println("Inventory End");

@@ -11,6 +11,6 @@ public interface InventoryHandler {
     void inventoryStart();
     void takeDate( Calendar when );
     void takeSupervisorName( String name );
-    Lot<SkuHandler> takeItems();
+    //Lot<SkuHandler> takeItems();
     void inventoryEnd();
 }

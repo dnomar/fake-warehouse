@@ -1,0 +1,76 @@
+package cl.emagina.curso.fakewarehouse;
+
+import java.time.LocalTime;
+import java.time.LocalDate;
+import java.sql.*;
+import java.util.ArrayList;
+
+public class Movimiento implements IDbMovimientosHandler {
+		
+	private String tipoMovimiento;
+	private int idCliente;
+	private LocalDate fecha;
+	private LocalTime hora;
+	private int idProducto;
+	private int cantidadProducto;
+	
+	public Movimiento (String tipoMovimiento,int idCliente,LocalDate fecha,LocalTime hora, int idProducto,int cantidad){
+		
+		this.tipoMovimiento=tipoMovimiento;
+		this.idCliente=idCliente;
+		this.fecha=fecha;
+		this.hora=hora;
+		this.idProducto=idProducto;
+		this.cantidadProducto=cantidadProducto;
+	}
+	
+	public void insertar(Connection conn){
+		
+		try{
+			conn.setAutoCommit(false);
+			PreparedStatement stmt=conn.prepareStatement("insert into movimientos(?,?,?,?,?,?,?)");
+			
+			stmt.setString(2,this.tipoMovimiento);
+			stmt.setInt(3,idCliente);
+			stmt.setString(4,fecha.toString());
+			stmt.setString(5,hora.toString());
+			stmt.setInt(6,idProducto);
+			stmt.setFloat(7,cantidadProducto);
+			
+			conn.commit();
+			conn.setAutoCommit(true);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		/*
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()!=false) {
+				String Razon_Social = rs.getString(2);
+				String rut = rs.getString(3);
+				String nombre_contacto = rs.getString(4);
+				String direccion = rs.getString(5);
+				String fono = rs.getString(6);
+				System.out.println(Razon_Social + "\t" + rut +
+								   "\t" + nombre_contacto + "\t" + direccion +
+								   "\t" + fono);
+			}
+		} catch (SQLException e ) {
+			e.printStackTrace();
+		} finally {
+			if (stmt != null) { 
+				try{
+					stmt.close();
+				}catch(Exception ey){
+					ey.printStackTrace();
+				}
+			}		
+		}*/
+	}
+	
+	public void actualizar(int id, Connection conn){}
+	public void borrar(int id, Connection conn){}
+	public Movimiento recuperar(int id,Connection conn){return null;}
+	public ArrayList<Movimiento> recuperarTodos(Connection conn){return null;}
+}

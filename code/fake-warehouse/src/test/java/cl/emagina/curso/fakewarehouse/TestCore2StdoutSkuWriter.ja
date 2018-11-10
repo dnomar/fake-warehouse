@@ -15,7 +15,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 
-public class TestSysoutInventoryWriter{
+public class TestCore2StdoutSkuWriter{
 
 	//# 
 	//# Header 
@@ -151,6 +151,25 @@ public class TestSysoutInventoryWriter{
 		assertEquals(outStream2.toString(),outStream.toString());
 		
 	}
+	
+	@Test
+	public void deberetornar_lot_of_SkuHandler_en_takeItems(){
+			
+		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+		
+		PrintWriter pww=new PrintWriter(outStream); 
+		
+		//Test Code------------------------------------------------------------
+		
+		SysoutInventoryWriter sysoutInvWrt=new SysoutInventoryWriter(pww);
+		
+		assertTrue(false);
+		
+		
+	}
+	
+
+
 	
 	
 }
